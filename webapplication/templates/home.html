@@ -1,0 +1,865 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+{% if user.is_authenticated %}
+<head>
+	{% load staticfiles %} <!-- Prepare django to load static files -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery.thumbs.js"></script>
+	<link rel="stylesheet" type="text/css" href="//code.jquery.com/jquery.thumbs.css" />
+	<script type="text/javascript" src="//code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/jquery.thumbs.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Page title</title>
+	<style>
+		body {font-family: Century Gothic;}
+		input[type=button], input[type=submit], button[type=cd], input[type=reset]  {
+		background-color: #56baed;
+		border: none;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		text-transform: uppercase;
+		font-size: 13px;
+		-webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+		box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+		-webkit-border-radius: 5px 5px 5px 5px;
+		border-radius: 5px 5px 5px 5px;
+		margin: 5px 20px 40px 20px;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-ms-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+		}
+		input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+		background-color: #39ace7;
+		}
+		input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+		-moz-transform: scale(0.95);
+		-webkit-transform: scale(0.95);
+		-o-transform: scale(0.95);
+		-ms-transform: scale(0.95);
+		transform: scale(0.95);
+		}
+		input[type=text] {
+		background-color: #f6f6f6;
+		border: none;
+		color: #0d0d0d;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 12px;
+		margin: 5px;
+		border: 2px solid #f6f6f6;
+		-webkit-transition: all 0.5s ease-in-out;
+		-moz-transition: all 0.5s ease-in-out;
+		-ms-transition: all 0.5s ease-in-out;
+		-o-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+		-webkit-border-radius: 5px 5px 5px 5px;
+		border-radius: 5px 5px 5px 5px;
+		}
+		input[type=text]:focus {
+		background-color: #fff;
+		border-bottom: 2px solid #5fbae9;
+		}
+		input[type=text]::placeholder {
+		color: #cccccc;
+		}
+		.new-rect {
+		background: black;
+		width: 20%;
+		height: 30px;
+		}
+		.alignleft {
+		float: left;
+		}
+		submit.top {
+		display: none;
+		}
+		.nav {
+		background-color: yellow;
+		list-style-type: none;
+		text-align: center;
+		margin: 0;
+		padding: 0;
+		}
+		.nav li {
+		display: inline-block;
+		font-size: 20px;
+		padding: 20px;
+		}
+		.alignright {
+		float: right;
+		}
+		.grid-container {
+		display: grid;
+		grid-template-columns: auto auto auto auto auto;
+		grid-gap: 40px;
+		background-color: rgba(128, 128, 128, 0.1);
+		padding: 3px;
+		}
+		.grid-container > div {
+		text-align: center;
+		}
+		p.hidden {
+		display: none;
+		}
+		div.hidden {
+		display: none;
+		}
+		button.hidden {
+		display: none;
+		}
+		.titles p {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		text-decoration: none;
+		color: #FFFFFF;
+		font-size: 25px;
+		font-family: helvetica;
+		}
+		.griditem:hover .titles {
+		text-decoration: none;
+		opacity:1;
+		}
+		.griditem:hover .video {
+		display: inline;
+		}
+		.griditem:hover .imgspacer {
+		display: none;
+		}
+		h5 {
+		font-family: Helvetica Neue;
+		font-size: 5em;
+		color: #FFFFFF;
+		padding-bottom:0;
+		margin-bottom:-30px;
+		}
+		h6 {
+		padding-top: 0;
+		}
+		div alignr {
+		text-align: right;
+		}
+		.uploadForm{
+		display:none;
+		}
+		.saveRecordingSetForm{
+		display:none;
+		}
+		.saveWorkingSetForm{
+		display:none;
+		}
+		.loadWorkingSetForm{
+		display:none;
+		}
+		.deleteForm{
+		display:none;
+		}
+		.ele{
+		width: 180px;
+		height: 220px;
+		position: relative;
+		left: 50%;
+		transform: translateX(-50%);
+		}
+		.htext{
+		text-indent: 10px;
+		padding: 10px;
+		}
+		input.hidden {
+		display: none;
+		}
+		.video{
+		max-height: 100%;
+		}
+		.comment {
+		width: 99%;
+		background-color : #F6F5F5;
+		font-size: 13px;
+		}
+		.rating {
+		width:1%;
+		}
+		input.hidden {
+		display: none;
+		}
+		.my-class {
+		display : inline-flex;
+		}
+		.nobull {
+		list-style-type: none;
+		}
+		.like,
+		.dislike {
+		display: inline-block;
+		cursor: pointer;
+		margin: 10px;
+		}
+		.dislike:hover,
+		.like:hover {
+		color: #2EBDD1;
+		transition: all .2s ease-in-out;
+		transform: scale(1.1);
+		}
+		.active {
+		color: #2EBDD1;
+		}
+	</style>
+<body >
+	<div id="userControls">
+		<center>
+			<p>
+				<button type="button" id="uploadButton" width="10px" onclick="toggleUpload()">Upload</button>&nbsp;
+				<button type="button" id="deleteButton" width="10px" onclick="toggleDelete()">Delete</button>&nbsp;
+				<button type="button" id="saveWorkingSetButton" width="10px" onclick="toggleSaveWorkingSet()">Save Working Set</button>&nbsp;
+				<button type="button" id="loadWorkingSetButton" width="10px" onclick="toggleLoadWorkingSet()">Load Working Set</button>&nbsp;
+				<button type="button" id="saveRecordingSetButton" width="10px" onclick="toggleRecordingSet()">Save Recording Set</button>&nbsp;
+				<button type="button" width="10px" onclick="location.href='{% url 'logout' %}'">Log Out</button>&nbsp;
+			</p>
+			<p class="uploadForm" id="uploadForm">Enter Video URL: <input type="text" name="videoURL" id="videoURL">
+				Enter Category: <input type="text" name="uploadCategory" id="uploadCategory"> Enter Video Tag: <input type="text" name="uploadVideotag" id="uploadVideotag">
+				<input type="button" onclick="uploadVidCat()" value="Upload">
+			</p>
+			<p class="deleteForm" id="deleteForm">Enter Video Tag: <input type="text" name="deleteVideotag" id="deleteVideotag">
+				<input type="button" onclick="deleteVid();return false;" value="Delete Video">
+				Enter Category: <input type="text" name="deleteCategory" id="deleteCategory">
+				<input type="button" onclick="deleteCat();return false;" value="Delete Category">
+			</p>
+			<p class="loadWorkingSetForm" id="loadWorkingSetForm">Enter Identifier: <input type="text" name="loadWorkingSetIdentifier" id="loadWorkingSetIdentifier">
+				<input type="button" onclick="loadWorkingSet();return false;" value="Load Working Set">
+			</p>
+			<p class="saveWorkingSetForm" id="saveWorkingSetForm">Enter Identifier: <input type="text" name="saveWorkingSetIdentifier" id="saveWorkingSetIdentifier">
+				<input type="button" onclick="saveWorkingSet();return false;" value="Save Working Set">
+			</p>
+			<p class="saveRecordingSetForm" id="saveRecordingSetForm">Enter Identifier: <input type="text" name="saveRecordingSetdentifier" id="saveRecordingSetIdentifier">
+				<input type="button" onclick="saveRecordingSet();return false;" value="Save Recording Set">
+			</p>
+			<br>
+		</center>
+	</div>
+</body>
+<!-- function loadData() { -->
+<script>
+	function loadWorkingSet() {
+	        var identifier=document.getElementById("loadWorkingSetIdentifier").value;
+	        {%  for ob in obj %}
+	           if (identifier.localeCompare('{{ob.identifier}}')===0){
+	        document.getElementById("videoURL").setAttribute('value','{{ob.vidURL}}');
+	        document.getElementById("uploadCategory").setAttribute('value','{{ob.vidCategory}}');
+	        document.getElementById("uploadVideotag").setAttribute('value','{{ob.vidTag}}');
+	        uploadVidCat();
+	           }
+	           {% endfor %}
+	           document.getElementById("videoURL").setAttribute('value','');
+	           document.getElementById("uploadCategory").setAttribute('value','');
+	           document.getElementById("uploadVideotag").setAttribute('value','');
+
+
+	}
+</script>
+<!-- function saveWorkingSet() { -->
+<script>
+	function saveWorkingSet() {
+	        {#videos[i].nextElementSibling.nextElementSibling.children[0].value gives you the comment value#}
+	        {#videos[i].nextElementSibling.nextElementSibling.children[1].id gives you rating like or dislike#}
+	        {#videos[i].getAttribute('id').replace('vid',''); this gives you vidtag#}
+	        {#document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).value gives postdata value#}
+	        var videos = document.querySelectorAll('video');
+	        var postval;
+	        for(var i=0; i<videos.length; i++) {
+	            videos[i].nextElementSibling.nextElementSibling.children[0].value; {#gives you the comment value#}
+	            videos[i].nextElementSibling.nextElementSibling.children[1].id; {#gives you rating like or dislike#}
+	            var vidtag=videos[i].getAttribute('id').replace('vid',''); {#gives you vidtag#}
+	            videos[i].currentTime;
+	            document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).value; {#gives postdata value#}
+	            {#0 -> category | 1 -> vidTag | 2-> URL |  3 -> like | 4 ->comment | 5 -> currenttime | 6 ->abort#}
+	               {#7 -> ended | 8 -> error | 9-> play |  10 -> playing | 11 ->seeked | 12 -> seeking | 13 ->timeupdate#}
+	               {#14 -> volumeChange | 15 -> waiting | 16-> pause#}
+
+	                postval=document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).getAttribute('value').split('divider');
+	                postval[3]=videos[i].nextElementSibling.nextElementSibling.children[1].id;
+	                postval[4]=videos[i].nextElementSibling.nextElementSibling.children[0].value;
+	                postval[5]=videos[i].currentTime.toString(10);
+	               postval[6]=document.getElementById("abort"+vidtag).value;
+	               postval[7]=document.getElementById("ended"+vidtag).value;
+	               postval[8]=document.getElementById("error"+vidtag).value;
+	               postval[9]=document.getElementById("play"+vidtag).value;
+	               postval[10]=document.getElementById("playing"+vidtag).value;
+	               postval[11]=document.getElementById("seeked"+vidtag).value;
+	               postval[12]=document.getElementById("seeking"+vidtag).value;
+	               postval[13]=document.getElementById("timeupdate"+vidtag).value;
+	               postval[14]=document.getElementById("volumechange"+vidtag).value;
+	               postval[15]=document.getElementById("waiting"+vidtag).value;
+	               postval[16]=document.getElementById("pause"+vidtag).value;
+	               postval[17]="saveWorkingSet";
+	               postval[18]=document.getElementById("saveWorkingSetIdentifier").value;
+
+	            document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).setAttribute('value',postval.join('divider'));
+	        }
+	    document.getElementById('postsubmit').click()
+	}
+</script>
+<!-- function saveRecordingSet() { -->
+<script>
+	function saveRecordingSet() {
+	    {#videos[i].nextElementSibling.nextElementSibling.children[0].value gives you the comment value#}
+	{#videos[i].nextElementSibling.nextElementSibling.children[1].id gives you rating like or dislike#}
+	{#videos[i].getAttribute('id').replace('vid',''); this gives you vidtag#}
+	{#document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).value gives postdata value#}
+	        var videos = document.querySelectorAll('video');
+	        var postval;
+	        var vidAttributes;
+	        for(var i=0; i<videos.length; i++) {
+	            videos[i].nextElementSibling.nextElementSibling.children[0].value; {#gives you the comment value#}
+	            videos[i].nextElementSibling.nextElementSibling.children[1].id; {#gives you rating like or dislike#}
+	            var vidtag=videos[i].getAttribute('id').replace('vid',''); {#gives you vidtag#}
+	            videos[i].currentTime;
+	            document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).value; {#gives postdata value#}
+	            {#0 -> category | 1 -> vidTag | 2-> URL |  3 -> like | 4 ->comment | 5 -> currenttime | 6 ->abort#}
+	               {#7 -> ended | 8 -> error | 9-> play |  10 -> playing | 11 ->seeked | 12 -> seeking | 13 ->timeupdate#}
+	               {#14 -> volumeChange | 15 -> waiting | 16-> pause#}
+
+	            postval=document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).getAttribute('value').split('divider');
+	            postval[3]=videos[i].nextElementSibling.nextElementSibling.children[1].id;
+	            postval[4]=videos[i].nextElementSibling.nextElementSibling.children[0].value;
+	            postval[5]=videos[i].currentTime.toString(10);
+	               postval[6]=document.getElementById("abort"+vidtag).value;
+	               postval[7]=document.getElementById("ended"+vidtag).value;
+	               postval[8]=document.getElementById("error"+vidtag).value;
+	               postval[9]=document.getElementById("play"+vidtag).value;
+	               postval[10]=document.getElementById("playing"+vidtag).value;
+	               postval[11]=document.getElementById("seeked"+vidtag).value;
+	               postval[12]=document.getElementById("seeking"+vidtag).value;
+	               postval[13]=document.getElementById("timeupdate"+vidtag).value;
+	               postval[14]=document.getElementById("volumechange"+vidtag).value;
+	               postval[15]=document.getElementById("waiting"+vidtag).value;
+	               postval[16]=document.getElementById("pause"+vidtag).value;
+	               postval[17]="saveRecordingSet";
+	               postval[18]=document.getElementById("saveRecordingSetIdentifier").value;
+	            document.getElementById("post"+videos[i].getAttribute('id').replace('vid','')).setAttribute('value',postval.join('divider'));
+	        }
+	    document.getElementById('postsubmit').click()
+	}
+</script>
+<!-- function ratingSystem(x) { -->
+<script>
+	function ratingSystem(x) {
+	  var z = x.parentNode.parentNode.id;
+
+	if (x.className.match(/(?:^|\s)active(?!\S)/)){
+		x.className =x.className.replace(/(?:^|\s)active(?!\S)/g , '')
+	    x.parentNode.parentNode.id="rating";
+	}
+	else{
+		if (z==="rating"){
+	   x.parentNode.parentNode.id=x.parentNode.className;
+		x.className += " active";
+		}
+	    else if(z==="like" && x.parentNode.className!="like"){
+	    }
+	    else if(z==="like" && x.parentNode.className==="like"){
+	       x.parentNode.parentNode.id="rating";
+		x.className += " active";
+	    }
+	    else if(z==="dislike" && x.parentNode.className!="dislike"){
+	    }
+	    else if(z==="dislike" && x.parentNode.className==="dislike"){
+	    x.parentNode.parentNode.id=x.parentNode.className;
+		x.className += " active";
+	    }
+	    else{
+	    }
+	}
+
+	}
+</script>
+<!-- function getRange(tag) { -->
+<script>
+	function getRange(tag) {
+	  var vid = document.getElementById(tag);
+	  if (vid != null){
+	    return vid.currentTime;
+	     }
+	  else{
+	      return 0;
+	     }
+	}
+</script>
+<!-- function toggleLoadWorkingSet() { -->
+<script>
+	function toggleLoadWorkingSet() {
+		  var y = document.getElementById("saveWorkingSetForm");
+	         var z =document.getElementById("saveRecordingSetForm");
+
+	     if (y.style.display === "block") {
+		    alert("Must close Save Working Set form");
+		  }
+	     else if(z.style.display === "block"){
+		    alert("Must close Save Recording Set form");
+	        }
+	     else {
+	         var x = document.getElementById("loadWorkingSetForm");
+	         if (x.style.display === "block") {
+	             x.style.display = "none";
+	         } else {
+	             x.style.display = "block";
+	         }
+	         {#This toggles the loadWorkingSetFormbutton to be called hide when clicked#}
+
+	         if (document.querySelector('#loadWorkingSetButton').textContent.localeCompare("Load Working Set")===0 ) {
+	             document.querySelector('#loadWorkingSetButton').textContent = "Hide";
+	         } else {
+	             document.querySelector('#loadWorkingSetButton').textContent = "Load Working Set";
+	         }
+	     }
+	}
+</script>
+<!-- function toggleSaveWorkingSet() { -->
+<script>
+	function toggleSaveWorkingSet() {
+		  var y = document.getElementById("loadWorkingSetForm");
+	         var z =document.getElementById("saveRecordingSetForm");
+
+	     if (y.style.display === "block") {
+		    alert("Must close Load Working Set form");
+		  }
+	     else if(z.style.display === "block"){
+		    alert("Must close Save Recording Set form");
+	        }
+	     else {
+	         var x = document.getElementById("saveWorkingSetForm");
+	         if (x.style.display === "block") {
+	             x.style.display = "none";
+	         } else {
+	             x.style.display = "block";
+	         }
+	         {#This toggles the saveWorkingSetFormbutton to be called hide when clicked#}
+
+	         if (document.querySelector('#saveWorkingSetButton').textContent.localeCompare("Save Working Set")===0) {
+	             document.querySelector('#saveWorkingSetButton').textContent = "Hide";
+	         } else {
+	             document.querySelector('#saveWorkingSetButton').textContent = "Save Working Set";
+	         }
+	     }
+	}
+</script>
+<!-- function toggleRecordingSet() { -->
+<script>
+	function toggleRecordingSet() {
+		  var y = document.getElementById("loadWorkingSetForm");
+	         var z =document.getElementById("saveWorkingSetForm");
+
+	     if (y.style.display === "block") {
+		    alert("Must close Load Working Set form");
+		  }
+	     else if(z.style.display === "block"){
+		    alert("Must close Save Working Set form");
+	        }
+	     else {
+	         var x = document.getElementById("saveRecordingSetForm");
+	         if (x.style.display === "block") {
+	             x.style.display = "none";
+	         } else {
+	             x.style.display = "block";
+	         }
+	         {#This toggles the saveWorkingSetFormbutton to be called hide when clicked#}
+
+	         if ((document.querySelector('#saveRecordingSetButton').textContent.localeCompare("Save Recording Set"))===0) {
+	             document.querySelector('#saveRecordingSetButton').textContent = "Hide";
+	         } else {
+	             document.querySelector('#saveRecordingSetButton').textContent = "Save Recording Set";
+	         }
+	     }
+	}
+</script>
+<!-- function toggleUpload() { -->
+<script>
+	function toggleUpload() {
+		  var y = document.getElementById("deleteForm");
+	     if (y.style.display === "block") {
+		    alert("Must close delete form");
+		  }    else {
+	         var x = document.getElementById("uploadForm");
+	         if (x.style.display === "block") {
+	             x.style.display = "none";
+	         } else {
+	             x.style.display = "block";
+	         }
+	         {#This toggles the upload button to be called hide when clicked#}
+
+	         if (document.querySelector('#uploadButton').textContent === "Upload") {
+	             document.querySelector('#uploadButton').textContent = "Hide";
+	         } else {
+	             document.querySelector('#uploadButton').textContent = "Upload";
+	         }
+	     }
+	}
+</script>
+<!-- function toggleDelete() { -->
+<script>
+	function toggleDelete() {
+	  var y = document.getElementById("uploadForm");
+	    if (y.style.display === "block") {
+	    alert("Must close upload form");
+	  } else {
+	        var x = document.getElementById("deleteForm");
+	        if (x.style.display === "block") {
+	            x.style.display = "none";
+	        } else {
+	            x.style.display = "block";
+	        }
+	        {#This toggles the upload button to be called hide when clicked#}
+
+	        if (document.querySelector('#deleteButton').textContent === "Delete") {
+	            document.querySelector('#deleteButton').textContent = "Hide";
+	        } else {
+	            document.querySelector('#deleteButton').textContent = "Delete";
+	        }
+	    }
+	}
+
+</script>
+<!-- function uploadVidCat() {-->
+<script>
+	function uploadVidCat() {
+	       var url = document.getElementById("videoURL").value;
+	       var cat = document.getElementById("uploadCategory").value;
+	       var videotag = document.getElementById("uploadVideotag").value;
+	       if (document.getElementById(videotag)===null ){
+
+
+	    var x = document.createElement("HEADER");
+	    x.setAttribute("id", "myHeader");
+	    if (document.getElementById(cat)!=null){
+	        var div = document.getElementById(cat);
+	           var ret = div.innerHTML.replace('<button class="hidden" id="postsubmit" type="submit">Submit</button>','');
+	           ret = ret.replace('</form>','');
+	           var postdata="";
+	        div.innerHTML = ret +  '<input type="text" class="hidden" value="0" id="seeking'+videotag+'"></input><input type="text" class="hidden" value="0" id="error'+videotag+'"></input><input type="text" class="hidden" value="0" id="ended'+videotag+'"></input><input type="text" class="hidden" value="0" id="abort'+videotag+'"></input><input type="text" class="hidden" value="0" id="pause'+videotag+'"></input><input type="text" class="hidden" value="0" id="play'+videotag+'"></input><input type="text" class="hidden" value="0" id="playing'+videotag+'"></input><input type="text" class="hidden" value="0" id="timeupdate'+videotag+'"></input><input type="text" class="hidden" value="0" id="volumechange'+videotag+'"></input><input type="text" class="hidden" value="0" id="seeked'+videotag+'"></input><input type="text" class="hidden" value="0" id="waiting'+videotag+'"></input><div class="ele" id="'+videotag+'" ><input id="post'+videotag+'" class="hidden" type="text" name="n" value="'+postdata+'" /><p style="font-family:Century Gothic;display:inline;font-size:15px">'+videotag+'' +
+	               '</p><br>' + '<video id="vid'+videotag+'" class="video" width="100%" height="100" controls> <source src="' + url +
+	               '" type="video/mp4">' + '</video><br><div class="my-class"><textarea  ' +
+	               'id="comment'+videotag+'" ' +
+	               'placeholder="Type your comment here"' +
+	               'class="comment" width="150px"></textarea><div class="rating" id="rating" width="25px">  <div class="like"> ' +
+	               '<i onclick="ratingSystem(this)" class="fa fa-thumbs-up"></i> </div>' +
+	               ' <div class="dislike"> <i onclick="ratingSystem(this)" class="fa fa-thumbs-down"></i> ' +
+	               '</div></div></div>';
+	    }
+	    else {
+	        document.body.appendChild(x);
+	        var y = document.createElement("div");
+	        {#y.contentEditable=true;#}
+	        y.style.fontFamily='Century Gothic';
+	        y.className="htext";
+	        y.style.fontWeight='bold';
+	        y.style.fontSize="27px";
+	        var t = document.createTextNode(cat);
+	        y.appendChild(t);
+
+	        var para = document.createElement("p");
+	        para.appendChild(y);
+	        var div = document.createElement('div');
+	        div.className = 'grid-container';
+	        div.id = cat;
+	           var postdata="";
+
+
+	        div.innerHTML = '<input type="text" class="hidden" value="0" id="seeking'+videotag+'"></input><input type="text" class="hidden" value="0" id="error'+videotag+'"></input><input type="text" class="hidden" value="0" id="ended'+videotag+'"></input><input type="text" class="hidden" value="0" id="abort'+videotag+'"></input><input type="text" class="hidden" value="0" id="pause'+videotag+'"></input><input type="text" class="hidden" value="0" id="play'+videotag+'"></input><input type="text" class="hidden" value="0" id="playing'+videotag+'"></input><input type="text" class="hidden" value="0" id="timeupdate'+videotag+'"></input><input type="text" class="hidden" value="0" id="volumechange'+videotag+'"></input><input type="text" class="hidden" value="0" id="seeked'+videotag+'"></input><input type="text" class="hidden" value="0" id="waiting'+videotag+'"></input><div class="ele" id="'+videotag+'" > <input type="text"' +
+	               'id="post'+videotag+'" class="hidden" name="n" value="'+postdata+'" /><p style="font-family:Century Gothic;display:inline;font-size:15px">'+videotag+'' +
+	               '</p><br><video id="vid'+videotag+'"  class="video" width="100%" height="100" controls> <source src="'
+	               + url + '" type="video/mp4"></video><br><div class="my-class"><textarea' +
+	               '  id="comment'+videotag+'"' +
+	               'placeholder="Type your comment here"' +
+	               'class="comment" width=150px"></textarea><div class="rating" id="rating" width="25px">   <div class="like"> <i onclick="ratingSystem(this)"' +
+	               ' class="fa fa-thumbs-up"></i> </div> <div class="dislike"> <i onclick="ratingSystem(this)"' +
+	               ' class="fa fa-thumbs-down"></i> </div> </div></div>';
+
+	        para.appendChild(div);
+	        para.id=cat+"body";
+	        document.body.firstChild.appendChild(para);
+	    }
+	            {#0 -> category | 1 -> vidTag | 2-> URL |  3 -> like | 4 ->comment | 5 -> currenttime | 6 ->abort#}
+	               {#7 -> ended | 8 -> error | 9-> play |  10 -> playing | 11 ->seeked | 12 -> seeking | 13 ->timeupdate#}
+	               {#14 -> volumeChange | 15 -> waiting | 16-> pause#}
+	        	           document.getElementById("post"+videotag).setAttribute('value',cat+"divider"+videotag+"divider"+url+
+	                              "divider"+ "like"+"divider"+'comment'+"divider"+"currenttime"+"divider"+"abort"+"divider"+"ended"
+	                              +"divider"+"error"+"divider"+"play"+"divider"+"playing"+"divider"+"seeked"+"divider"+"seeking"
+	                              +"divider"+"timeupdate"+"divider"+"volumechange"+"divider"+"waiting"+"divider"+"pause"+"divider"+"mode"+"divider"+"identifier");
+	    var vidid;
+	       var videos = document.querySelectorAll('video');
+
+	       for(var i=0; i<videos.length; i++) {
+	           videos[i].addEventListener('play', function () {
+	               pauseAll(this)
+	           }, true);
+	           videos[i].addEventListener('pause', function () {
+	               saveVidInfoOnPause(this)
+	           }, true);
+	           videos[i].addEventListener('timeupdate', function () {
+	               saveTimeChange(this)
+	           }, true);
+	           videos[i].addEventListener('abort', function () {
+	               saveAbort(this)
+	           }, true);
+	           videos[i].addEventListener('playing', function () {
+	               savePlaying(this)
+	           }, true);
+	           videos[i].addEventListener('volumechange', function () {
+	               saveVolumeChange(this)
+	           }, true);
+	           videos[i].addEventListener('waiting', function () {
+	               saveWaiting(this)
+	           }, true);
+	           videos[i].addEventListener('seeked', function () {
+	               saveSeeked(this)
+	           }, true);
+	           videos[i].addEventListener('seeking', function () {
+	               saveSeeking(this)
+	           }, true);
+	           videos[i].addEventListener('error', function () {
+	               saveError(this)
+	           }, true);
+	           videos[i].addEventListener('ended', function () {
+	               saveEnded(this)
+	           }, true);
+	       }
+	}
+	       else{
+	           alert("Enter a unique videotag");
+	          }
+	       {#document.getElementById("vid"+videotag).addEventListener('pause', function(){saveVidInfoOnPause("post"+videotag,this)}, true);#}
+	    {#document.getElementById("vid"+videotag).addEventListener('play', function(){pauseAll(this)}, true);#}
+
+	}
+
+</script>
+<!-- function pauseAll(elem){-->
+<script>
+	function pauseAll(vidBeingPlayed){
+	    var videos = document.querySelectorAll('video');
+	    var playid="play"+vidBeingPlayed.id.replace('vid','');
+	    var playIncrement=(parseInt(document.getElementById(playid).value)+1).toString(10);
+	    document.getElementById(playid).setAttribute('value',playIncrement);
+		for(var i=0; i<videos.length; i++){
+			//playing, remember on play function is called
+			if(videos[i] == vidBeingPlayed) continue;
+			//If the video is not vidBeingPlayed but is still playing regardless
+			if(videos[i].played.length > 0 && !videos[i].paused){
+			// Then pause it now
+			  videos[i].pause();
+			}
+		}
+	  }
+</script>
+<!-- function savePlaying(elem){-->
+<script>
+	function savePlaying(elem){
+	       var playingid="playing"+elem.id.replace('vid','');
+	       var playingIncrement=(parseInt(document.getElementById(playingid).value)+1).toString(10);
+	    document.getElementById(playingid).setAttribute('value',playingIncrement);
+	  }
+</script>
+<!-- function saveVolumeChange(elem){-->
+<script>
+	function saveVolumeChange(elem){
+	       var volumechangeid="volumechange"+elem.id.replace('vid','');
+	       var volumechangeIncrement=(parseInt(document.getElementById(volumechangeid).value)+elem.volume).toString(10);
+	    document.getElementById(volumechangeid).setAttribute('value',volumechangeIncrement);
+	  }
+</script>
+<!-- function saveError(elem){-->
+<script>
+	function saveError(elem){
+	       var errorid="seeked"+elem.id.replace('vid','');
+	       var errorIncrement=(parseInt(document.getElementById(errorid).value)+1).toString(10);
+	    document.getElementById(errorid).setAttribute('value',errorIncrement);
+	  }
+</script>
+<!-- function saveEnded(elem){-->
+<script>
+	function saveEnded(elem){
+	       var endedid="ended"+elem.id.replace('vid','');
+	       var endedIncrement=(parseInt(document.getElementById(endedid).value)+1).toString(10);
+	    document.getElementById(endedid).setAttribute('value',endedIncrement);
+	  }
+</script>
+<!-- function saveSeeking(elem){-->
+<script>
+	function saveSeeking(elem){
+	       var seekingid="seeked"+elem.id.replace('vid','');
+	       var seekingIncrement=(parseInt(document.getElementById(seekingid).value)+1).toString(10);
+	    document.getElementById(seekingid).setAttribute('value',seekingIncrement);
+	  }
+</script>
+<!-- function saveSeeked(elem){-->
+<script>
+	function saveSeeked(elem){
+	       var seekedid="seeked"+elem.id.replace('vid','');
+	       var seekedIncrement=(parseInt(document.getElementById(seekedid).value)+1).toString(10);
+	    document.getElementById(seekedid).setAttribute('value',seekedIncrement);
+	  }
+</script>
+<!-- function saveAbort(elem){-->
+<script>
+	function saveAbort(elem){
+	       var abortid="abort"+elem.id.replace('vid','');
+	       var abortIncrement=(parseInt(document.getElementById(abortid).value)+1).toString(10);
+	    document.getElementById(abortid).setAttribute('value',abortIncrement);
+	  }
+</script>
+<!-- function saveWaiting(elem){-->
+<script>
+	function saveWaiting(elem){
+	       var waitingid="waiting"+elem.id.replace('vid','');
+	       var waitingIncrement=(parseInt(document.getElementById(waitingid).value)+1).toString(10);
+	    document.getElementById(waitingid).setAttribute('value',waitingIncrement);
+	  }
+</script>
+<!-- function saveTimeChange(elem){-->
+<script>
+	function saveTimeChange(elem){
+	       var timeupdateid="timeupdate"+elem.id.replace('vid','');
+	       var timeIncrement=(parseInt(document.getElementById(timeupdateid).value)+1).toString(10);
+	    document.getElementById(timeupdateid).setAttribute('value',timeIncrement);
+	  }
+</script>
+<!-- function saveVidInfoOnPause(elem){-->
+<script>
+	function saveVidInfoOnPause(elem){
+
+	    var pauseid="pause"+elem.id.replace('vid','');
+	    var pauseIncrement=(parseInt(document.getElementById(pauseid).value)+1).toString(10);
+	    document.getElementById(pauseid).setAttribute('value',pauseIncrement);
+
+	    {#document.getElementById(theid).setAttribute('value',document.getElementById(theid).value.concat(elem.currentTime.toString(10)));#}
+	  }
+</script>
+<!-- function deleteVid() { -->
+<script>
+	function deleteVid() {
+	    var videotag = document.getElementById("deleteVideotag").value;
+	    if (document.getElementById(videotag)!=null){
+	        var x = document.getElementById(videotag);
+	        if (x.parentNode.childElementCount===1){
+	            x.parentNode.parentNode.parentNode.removeChild(x.parentNode.parentNode);
+	               return false;
+
+	        }
+	        else {
+	            x.parentNode.removeChild(x);
+	               return false;
+	        }
+	    }
+	    else {
+	        alert("enter a valid videotag, "+videotag+" does not exist as a videotag.");
+	           return false;
+	    }
+	}
+</script>
+<!-- function deleteCat() { -->
+<script>
+	function deleteCat() {
+	    var category = document.getElementById("deleteCategory").value;
+	    if (document.getElementById(category)!=null){
+	        var x = document.getElementById(category+"body");
+	        if (x!=null){
+	            x.parentNode.removeChild(x);
+	        }
+	         else {
+	        alert("Enter a valid category, "+category+" does not exist as a category.");
+	    }
+	    }
+	    else {
+	        alert("Enter a valid category, "+category+" does not exist as a category.");
+	    }
+	}
+</script>
+<!-- document.addEventListener('keydown', function(event) {  -->
+<script>
+	document.addEventListener('keydown', function(event) {
+	  if (event.ctrlKey && event.key === '[') {
+	    if (document.getElementById("userControls").style.display!="none"){
+	        document.getElementById("userControls").style.display="none";
+	        var articles = document.getElementsByTagName('video');
+	        var everyChild = document.querySelectorAll("#actions.grid-container div");
+	        for (var i = 0; i<everyChild.length; i++) {
+	            everyChild[i].classList.add("anything");
+	            {#everyChild[i].i#}
+	}
+	        {#alert(articles);#}
+
+	    }
+	    else{
+	        document.getElementById("userControls").style.display="inline";
+	    }
+
+	  }
+	});
+</script>
+<script>
+	window.onbeforeunload = function() {
+	    return "Dude, are you sure you want to leave? Think of the kittens!";
+	}
+</script>
+{% else %}
+<!-- HTML For Login/Signup page -->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<style>
+		#background-log {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: #ffffff;
+		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+		}
+		.button-login {
+		justify-content: center;
+		align-items: center;
+		margin: 10px;
+		}
+		.button-login button {
+		display: block;
+		text-transform: uppercase;
+		width: 300px;
+		color: #fff;
+		border: none;
+		padding: 10px;
+		margin-bottom: 10px;
+		border-radius: 2px;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+		}
+		.twitch {
+		background-color: #999999 ;
+		}
+		.hitbox {
+		background-color: #999999 ;
+		}
+	</style>
+</head>
+<!-- Make Login and Sign Up Buttons that direct to appropriate routes -->
+<div id="background-log">
+	<div class="button-login">
+		<button type="button" class="twitch" onclick="location.href='http://127.0.0.1:8000/users/login/'" >Login</button>
+		<button type="button" class="hitbox" onclick="location.href='http://127.0.0.1:8000/users/signup/'">Sign Up</button>
+	</div>
+</div>
+{% endif %}
+{% endblock content %}

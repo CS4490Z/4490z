@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<form method="post" action="/createPost">
+		{% csrf_token %}
+		<head>
+			<style>
+				button.hidden {
+				display: none;
+				}
+			</style>
+			<meta charset="utf-8">
+		</head>
+		<body>
+			<main>
+				{% block content %}
+				{% endblock content %}
+			</main>
+			<button class="hidden" id="postsubmit" type="submit">Submit</button>
+		</body>
+	</form>
+</html>
