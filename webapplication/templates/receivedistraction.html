@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %} <!-- Prepaddddd load static files -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery.thumbs.js"></script>
+	<link rel="stylesheet" type="text/css" href="//code.jquery.com/jquery.thumbs.css" />
+	<script type="text/javascript" src="//code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/jquery.thumbs.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .videoDiv
+{
+    width: 70%; /*or whatever % you prefer*/
+    margin: 0 auto;
+    display: block;
+}
+    </style>
+</head>
+<body>
+<div id="videoDiv" style="display:none;" class="videoDiv">
+  <video id='video' width="100%" autoplay controls>
+    <source src="" type="video/mp4">
+  </video>
+</div>
+{#<button style="display:none;"type="button" id="createPostM" name="createPostM">Click Me</button>#}
+
+<script>
+{#$('#createPostM').on('click', function(event){  // catch the form's submit event#}
+        {#event.preventDefault();    #}
+$(document).ready(function(){
+var interval = 3000;  // 1000 = 1 second, 3000 = 3 seconds
+
+function doAjax() {
+    $.ajax({
+        url: '/getDistraction',
+        {#dataType: 'json',#}
+        {#data: { get_param: 'value' },#}
+        type: 'get', // This is the default though, you don't actually need to always mention it
+        success: function (data) {
+            var url=data.split('|')[2]
+            if (url.localeCompare(document.getElementById('video').src)!==0){
+                document.getElementById('video').setAttribute("src", url);
+                document.getElementById('video').load();
+                document.getElementById('videoDiv').style.display="block";
+                document.getElementById('video').play();
+            }
+            {#alert(JSON.stringify(data));#}
+        },
+        failure: function (data) {
+            alert('Got an error dude');
+        },
+        complete: function (data) {
+            setTimeout(doAjax, interval);
+        }
+    });
+}
+setTimeout(doAjax, interval);
+
+});
+</script>
+
+</body>
+</html>

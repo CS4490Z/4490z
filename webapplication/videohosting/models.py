@@ -26,3 +26,8 @@ class RecordingSet(models.Model):
     timestopped = models.TextField(default="")
     comment = models.TextField(default="")
     date = models.TextField(default="")
+
+class DistractionSet(models.Model):
+    vidCategory = models.TextField(default="")
+    vidTag = models.TextField(default="")
+    vidURL = models.TextField(default="")

@@ -3,7 +3,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <head>
-	{% load staticfiles %} <!-- Prepare django to load static files -->
+	{% load static %} <!-- Prepare django to load static files -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
@@ -155,6 +155,9 @@
 		.uploadForm{
 		display:none;
 		}
+		.sendDistractionForm{
+		display:none;
+		}
 		.saveRecordingSetForm{
 		display:none;
 		}
@@ -223,11 +226,16 @@
 			<p>
 				<button type="button" id="uploadButton" width="10px" onclick="toggleUpload()">Upload</button>&nbsp;
 				<button type="button" id="deleteButton" width="10px" onclick="toggleDelete()">Delete</button>&nbsp;
+                <button type="button" id="sendDistractionButton" width="10px" onclick="toggleSendDistraction()">Send Distraction</button>&nbsp;
 				<button type="button" id="saveWorkingSetButton" width="10px" onclick="toggleSaveWorkingSet()">Save Working Set</button>&nbsp;
 				<button type="button" id="loadWorkingSetButton" width="10px" onclick="toggleLoadWorkingSet()">Load Working Set</button>&nbsp;
 				<button type="button" id="saveRecordingSetButton" width="10px" onclick="toggleRecordingSet()">Save Recording Set</button>&nbsp;
+                <button type="button" id="refreshButton" width="10px" onclick="window.location.reload();">Clear</button>
+                <button type="button" id="refreshDistraction" width="10px" onclick="clearDistraction();return false;">Flush Distractions</button>
 				<button type="button" width="10px" onclick="location.href='{% url 'logout' %}'">Log Out</button>&nbsp;
 			</p>
+            <input type="text" class="hidden" name="clearDistractionTag" id="clearDistractionTag" value="false"></input>
+            <input type="text" class="hidden" name="sendDistractionTag" id="sendDistractionTag" value="false"></input>
 			<p class="uploadForm" id="uploadForm">Enter Video URL: <input type="text" name="videoURL" id="videoURL">
 				Enter Category: <input type="text" name="uploadCategory" id="uploadCategory"> Enter Video Tag: <input type="text" name="uploadVideotag" id="uploadVideotag">
 				<input type="button" onclick="uploadVidCat()" value="Upload">
@@ -236,6 +244,9 @@
 				<input type="button" onclick="deleteVid();return false;" value="Delete Video">
 				Enter Category: <input type="text" name="deleteCategory" id="deleteCategory">
 				<input type="button" onclick="deleteCat();return false;" value="Delete Category">
+			</p>
+			<p class="sendDistractionForm" id="sendDistractionForm">Enter Video Tag: <input type="text" name="sendDistractionInputTag" id="sendDistractionInputTag">
+				<input type="button" name="distract" onclick="sendDistraction();return false;" value="Send Distraction">
 			</p>
 			<p class="loadWorkingSetForm" id="loadWorkingSetForm">Enter Identifier: <input type="text" name="loadWorkingSetIdentifier" id="loadWorkingSetIdentifier">
 				<input type="button" onclick="loadWorkingSet();return false;" value="Load Working Set">
@@ -267,6 +278,51 @@
 	           document.getElementById("uploadVideotag").setAttribute('value','');
 
 
+	}
+</script>
+<!-- jQuery/Ajax Form Submit { -->
+<script>
+$('#createPostID').on('submit', function(event){  // catch the form's submit event
+        event.preventDefault();
+        var postForm = $(this);
+        var distractTag = document.getElementById('sendDistractionTag').value;
+        if (distractTag.localeCompare('false')!=0){
+        }
+
+        // Send the data using post
+        var posting = $.post( postForm.attr('action'), postForm.serialize() );
+        // if success:
+        posting.done(function(data) {
+            alert("Success");
+            console.log("Success");
+        });
+        // if failure:
+        posting.fail(function(data) {
+              alert("Failure");
+              console.log("Failure");
+            // 4xx or 5xx response, alert user about failure
+        });
+        document.getElementById('clearDistractionTag').setAttribute('value','false');
+        document.getElementById('sendDistractionTag').setAttribute('value','false');
+
+});
+</script>
+<!-- function sendDistraction() { -->
+<script>
+	function sendDistraction() {
+	    var vidTag=document.getElementById('sendDistractionInputTag').value;
+	    var vidValueString=document.getElementById(vidTag).children[0].value;
+
+	    document.getElementById('sendDistractionTag').setAttribute('value',vidValueString);
+	    document.getElementById('postsubmit').click()
+        {#document.getElementById('sendDistractionTag').setAttribute(name,"true")#}
+	}
+</script>
+<!-- function clearDistraction() { -->
+<script>
+	function clearDistraction() {
+	    document.getElementById('clearDistractionTag').setAttribute('value',"clear");
+	    document.getElementById('postsubmit').click();
 	}
 </script>
 <!-- function saveWorkingSet() { -->
@@ -480,6 +536,35 @@
 	             document.querySelector('#saveRecordingSetButton').textContent = "Hide";
 	         } else {
 	             document.querySelector('#saveRecordingSetButton').textContent = "Save Recording Set";
+	         }
+	     }
+	}
+</script>
+<!-- function toggleSendDistraction() { -->
+<script>
+	function toggleSendDistraction() {
+		  var y = document.getElementById("deleteForm");
+		  var z = document.getElementById("uploadForm");
+
+	     if (y.style.display === "block") {
+		    alert("Must close delete form");
+		  }
+	     else if (z.style.display === "block") {
+		    alert("Must close upload form");
+		  }
+	     else {
+	         var x = document.getElementById("sendDistractionForm");
+	         if (x.style.display === "block") {
+	             x.style.display = "none";
+	         } else {
+	             x.style.display = "block";
+	         }
+	         {#This toggles the sendDistraction button to be called hide when clicked#}
+
+	         if (document.querySelector('#sendDistractionButton').textContent === "Send Distraction") {
+	             document.querySelector('#sendDistractionButton').textContent = "Hide";
+	         } else {
+	             document.querySelector('#sendDistractionButton').textContent = "Send Distraction";
 	         }
 	     }
 	}
